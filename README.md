@@ -18,9 +18,9 @@ import (
 )
 
 func main() {
-    // initialize
+	// initialize
 	police := &police.Arrival{}
-    // set the count of goroutine processed at the same time
+	// set the count of goroutine processed at the same time
 	police.Limit(3)
 
 	wg := &sync.WaitGroup{}
@@ -28,14 +28,14 @@ func main() {
 	for i := 0; i < len(arr); i++ {
 		wg.Add(1)
 		go func(j int) {
-            // start block
+			// start block
 			police.Block()
 
 			defer wg.Done()
 			time.Sleep(time.Duration(arr[j]) * time.Second)
 			fmt.Printf("(arr[%d] = %d) is done.\n", j, arr[j])
 
-            // finish block
+			// finish block
 			police.Release()
 		}(i)
 	}
